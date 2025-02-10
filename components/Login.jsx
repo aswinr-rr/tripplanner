@@ -1,7 +1,10 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Colors } from "@/constants/Colors";
+import { useRouteNode } from "expo-router/build/Route";
+import { useRouter } from "expo-router";
 
 export default function Login() {
+    const router=useRouter();
   return (
     <View>
       <Image 
@@ -28,16 +31,17 @@ export default function Login() {
         }}>
           Plan your perfect trip effortlessly with AI-powered itineraries tailored to your preferences, budget, and real-time updates!
         </Text>
-        <View style={styles.button}>
+        <TouchableOpacity style={styles.button}
+        onPress={()=>router.push('auth/sign-in')}>
           <Text style={{
             color: Colors.WHITE,
             textAlign: "center",
             fontFamily: 'outfit',
             fontSize: 16,
           }}>
-            Sign In With Google
+            Get Started
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
