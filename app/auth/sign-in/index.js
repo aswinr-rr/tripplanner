@@ -1,17 +1,51 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ToastAndroid } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { useNavigation, useRouter } from 'expo-router'
 import {Colors} from './../../../constants/Colors'
 import { replace } from 'expo-router/build/global-state/routing';
-import Ionicons from '@expo/vector-icons/Ionicons'; 
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { auth } from '../../../configs/FirebaseConfig';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function SignIn() {
     const navigation=useNavigation();
     const router=useRouter();
+    const [email,setEmail]=useState();
+    const [password,setPassword]=useState();
+    const [loggedIn, setLoggedIn] = useState(false);
+
+
     useEffect(()=>{
       navigation.setOptions({
         headerShown:false
       })
     },[])
+    const onSignIn = async () => {
+      if (!email || !password) {
+        ToastAndroid.show("Please enter all details", ToastAndroid.LONG);
+        return;
+      }
+    
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        console.log("User Signed In:", user);
+    
+        // ✅ Store login session correctly
+        await AsyncStorage.setItem('isLoggedIn', 'true'); // Change from 'userToken' to 'isLoggedIn'
+    
+        // Replace the current screen with MyTrip page
+        router.replace('/mytrip');
+    
+      } catch (error) {
+        console.log("Login Error:", error.message);
+        if (error.code === 'auth/invalid-credential'||'auth/invalid-email') {
+          ToastAndroid.show('Invalid Credentials', ToastAndroid.LONG);
+        }
+      }
+    };
+    
   return (
     <View style={{
       padding:25,
@@ -52,7 +86,9 @@ export default function SignIn() {
           padding:10
         }}>Email</Text>
         <TextInput
-        style={styles.input} placeholder='Email'/>
+        style={styles.input} 
+        onChangeText={(value)=>setEmail(value)}
+        placeholder='Email'/>
       </View>
       <View>
         <Text style={{
@@ -61,9 +97,12 @@ export default function SignIn() {
         }}>Password</Text>
         <TextInput
         secureTextEntry={true}
-        style={styles.input} placeholder='Email'/>
+        style={styles.input} 
+        onChangeText={(value)=>setPassword(value)}
+        placeholder='Password'/>
       </View>
-      <View
+      {/* Sign In Button */}
+      <TouchableOpacity onPress={onSignIn}
       style={{
         padding:15,
         backgroundColor:Colors.BLUE1,
@@ -77,7 +116,7 @@ export default function SignIn() {
         }}>
           Sign In
         </Text>
-      </View>
+      </TouchableOpacity>
       <TouchableOpacity
         onPress={()=>router.replace('auth/sign-up')}
       style={{
