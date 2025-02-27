@@ -1,14 +1,15 @@
 import { View, Text, FlatList, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigation } from 'expo-router'
 import { Colors } from '../../constants/Colors';
 import {SelectTravellerList} from './../../constants/Options'
 import OptionCard from '../../components/CreateTrip/OptionCard';
+import { CreateTripContext } from '../../context/CreateTripContext';
 
 export default function selecttraveller() {
     const navigation=useNavigation();
     const [selectedTraveller,setSelectedTraveller]=useState();
-    
+    const {tripData,setTripData}=useContext(CreateTripContext);
 
     useEffect(()=>{
         navigation.setOptions({
@@ -16,7 +17,15 @@ export default function selecttraveller() {
             headerTransparent:true,
             headerTitle:'',
         })
-    })
+    },[])
+
+    useEffect(()=>{
+      setTripData({...tripData,
+        traveller:selectedTraveller
+      })
+
+    },[selectedTraveller])
+
   return (
     <View style={{
         padding:25,
@@ -41,7 +50,7 @@ export default function selecttraveller() {
       data={SelectTravellerList}
       renderItem={({item,index})=>(
         <TouchableOpacity 
-        onPress={()=>setSelectedTraveller(item.title)}
+        onPress={()=>setSelectedTraveller(item)}
 
         style={{
             marginVertical:10
@@ -51,6 +60,21 @@ export default function selecttraveller() {
       )}/>
 
       </View>
+      <TouchableOpacity style={{
+        padding:15,
+        backgroundColor:Colors.BLUE1,
+        borderRadius:15,
+        marginTop:27,
+      }}>
+        <Text style={{
+          textAlign:'center',
+          color:Colors.WHITE,
+          fontFamily:'outfit-medium',
+          fontSize:15,
+        }}>
+          Continue
+        </Text>
+      </TouchableOpacity>
     </View>
   )
 }
