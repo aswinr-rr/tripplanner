@@ -1,23 +1,29 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useNavigation, useRouter } from 'expo-router'
 import { Colors } from '../../constants/Colors';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
+import {CreateTripContext} from './../../context/CreateTripContext';
 
 export default function SearchPlace() {
 
     const navigation=useNavigation();
+    const {tripData,setTripData}=useContext(CreateTripContext);
     const router=useRouter ();
     useEffect(()=>{
         navigation.setOptions({
             headerShown:true,
             headerTransparent:true,
-            headerTitle:'Search',
+            headerTitle:'Search ',
         })
 
-    },[])
+    },[]);
+
+    useEffect(()=>{
+      console.log(tripData);
+    }),[tripData]
 
   return (
     <View
@@ -29,18 +35,38 @@ export default function SearchPlace() {
         height:'100%'
     }}>
       <GooglePlacesAutocomplete
-      placeholder='Search'
+      placeholder='Search Place'
+      fetchDetails={true}
       onPress={(data, details = null) => {
         // 'details' is provided when fetchDetails = true
-        console.log(data, details);
+        console.log(data.description);
+        console.log(details?.geometry.location);
+        console.log(details?.photos[0]?.photo_reference);
+        console.log(details?.url);
+        setTripData({
+          locationInfo:{
+            name:data.description,
+            coordinates:details?.geometry.location,
+            photoRef:details?.photos[0]?.photo_reference,
+            url:details?.url
+          }
+        })
         router.push('/create-trip/select-traveller')
       }}
       query={{
-        key: 'YOUR API KEY',
+        key: process.env.EXPO_PUBLIC_GOOGLE_MAP_KEY,
         language: 'en',
       }}
+
+      styles={{
+        textInputContainer:{
+          borderWidth:2,
+          borderRadius:7,
+          marginTop:25,
+        }
+      }}
     />
-    <View>
+    {/* <View>
       <TouchableOpacity
         onPress={()=>router.push('/create-trip/select-traveller')}
       style={{
@@ -58,7 +84,7 @@ export default function SearchPlace() {
           Go Ahead
         </Text>
         </TouchableOpacity>
-    </View>
+    </View> */}
     </View>
   )
 }

@@ -1,3 +1,6 @@
 import { createContext } from "react";
 
-export const CreateTripContext=createContext
+export const CreateTripContext = createContext({
+  tripData: [],
+  setTripData: () => {},
+});
