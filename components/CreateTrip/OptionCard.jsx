@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { Colors } from '../../constants/Colors'
 
-export default function OptionCard({option,selectedTraveller}) {
+export default function OptionCard({option,selectedOption}) {
   return (
     <View style={[{
         padding:15,
@@ -11,7 +11,7 @@ export default function OptionCard({option,selectedTraveller}) {
         justifyContent:'space-between',
         backgroundColor:Colors.TAN ,
         borderRadius:15,
-    },selectedTraveller?.id==option?.id&&{borderWidth:2}]}>
+    },selectedOption?.id==option?.id&&{borderWidth:2}]}>
       <View>
         <Text style={{
             fontSize:20,
