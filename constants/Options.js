@@ -50,3 +50,5 @@ export const SelectBudgetOptions=[
         icon:'💰'
     }
 ]
+
+export const AI_PROMPT='Generate a detailed travel itinerary for {location} for {totalDays} days and {totalNights} nights for {traveller} within a {budget} budget. The response must be in JSON format only, containing: {"FlightDetails": {"options": [], "prices": [], "bookingURLs": []}, "Hotels": [{"name": "", "address": "", "price": "", "imageURL": "", "geoCoordinates": "", "rating": "", "description": ""}], "PlacesToVisit": [{"name": "", "details": "", "imageURL": "", "geoCoordinates": "", "ticketPricing": "", "travelTime": ""}], "Itinerary": [{"day": 1, "places": [{"name": "", "bestTimeToVisit": ""}]}]}. Response Rules: The response should be in valid JSON format. Do not include any extra text, explanations, or placeholders. Ensure all required details are included in the JSON output every time.'
