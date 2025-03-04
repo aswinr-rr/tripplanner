@@ -20,10 +20,7 @@ export default function MyTrip() {
   }
 
   // return (
-  //   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-  //     <Text style={{ fontSize: 24, fontWeight: 'bold' }}>MyTrip</Text>
-  //     <Button title="Logout" onPress={handleLogout} />
-  //   </View>
+
   // );
   return(
     <View style={{
@@ -50,6 +47,11 @@ export default function MyTrip() {
         <StartNewTripCard/>
         :null
       }
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{ fontSize: 24, fontWeight: 'bold' }}>MyTrip</Text>
+      <Button title="Logout" onPress={handleLogout} />
+    </View>
+      
     </View>
   )
 }
