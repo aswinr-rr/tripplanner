@@ -17,8 +17,8 @@ export default function GenerateTrip() {
     const router=useRouter();
     const user=auth.currentUser;
     useEffect(()=>{
-        tripData&&GenerateAiTrip()
-    },[tripData])
+        GenerateAiTrip()
+    },[])
 
     const GenerateAiTrip=async()=>{
         setLoading(true);
@@ -42,7 +42,9 @@ export default function GenerateTrip() {
       userEmail:user.email,
       tripPlan:tripResp, //AI result
       tripData:JSON.stringify(tripData), //User slection
+      docId:docId,
     })
+
         router.push('(tabs)/mytrip');
 
     }
