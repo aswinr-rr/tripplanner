@@ -1,0 +1,92 @@
+import { View, Text, Image, StatusBar } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { useLocalSearchParams, useNavigation } from 'expo-router';
+import { Colors } from '../../constants/Colors';
+import moment from 'moment';
+import FlightInfo from '../../components/TripDetails/FlightInfo';
+
+export default function TripDetails() {
+    const navigation = useNavigation();
+    const { trip } = useLocalSearchParams();
+    const [tripDetails, setTripDetails] = useState(null);
+
+    const formatData = (data) => {
+        try {
+            return typeof data === 'string' ? JSON.parse(data) : data;
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            return {};
+        }
+    };
+
+    useEffect(() => {
+        navigation.setOptions({
+            headerShown: true,
+            headerTransparent: true,
+            headerTitle: '',
+        });
+
+        try {
+            const parsedTrip = typeof trip === 'string' ? JSON.parse(trip) : trip;
+            setTripDetails(parsedTrip);
+        } catch (error) {
+            console.error("Error parsing trip data:", error);
+            setTripDetails({});
+        }
+    }, []);
+
+    return tripDetails && (
+        <View style={{ flex: 1 }}>
+            {/* Hide Status Bar */}
+            <StatusBar hidden={true} />
+            <Image source={{
+                uri:
+                    'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference='
+                    + (formatData(tripDetails?.tripData)?.locationInfo?.photoRef || '')
+                    + '&key=' + process.env.EXPO_PUBLIC_GOOGLE_MAP_KEY
+            }}
+                style={{
+                    width: '100%',
+                    height: 300,
+                    borderRadius: 15,
+                }}
+            />
+            <View style={{
+                padding: 15,
+                backgroundColor: Colors.WHITE,
+                height: '100%',
+                marginTop: -30,
+                borderTopLeftRadius: 30,
+                borderTopRightRadius: 30,
+            }}>
+                <Text style={{
+                    fontSize: 25,
+                    fontFamily: 'outfit-bold',
+
+                }}>{tripDetails?.tripPlan?.TravelSummary?.destination}</Text>
+                <View style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: 5,
+                    marginTop:5,
+                }}>
+                    <Text>{moment(formatData(tripDetails.tripData).startDate).format('DD MMM YYYY')}</Text>
+                    <Text>-  {moment(formatData(tripDetails.tripData).endDate).format('DD MMM YYYY')}</Text>
+                </View>
+                <Text style={{
+                    fontFamily: 'outfit',
+                    fontSize: 17,
+                }}>
+                    {formatData(tripDetails.tripData)?.traveller.title}
+                </Text>
+                {/* flight info */}
+                <FlightInfo flightData={tripDetails?.tripPlan?.FlightDetails}/>
+
+            {/* Hotels list */}
+            {/* Trip day planner */}
+            </View>
+            
+
+        </View>
+    );
+}
