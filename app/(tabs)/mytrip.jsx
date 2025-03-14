@@ -48,36 +48,38 @@ export default function MyTrip() {
 
   // );
   return (
-    <ScrollView style={{
+    <ScrollView 
+    style={{
       padding: 25,
       paddingTop: 55,
       backgroundColor: Colors.WHITE,
       height: '100%'
-    }}>
-      <View
+    }}
+    contentContainerStyle={{ flexGrow: 1 }} // ✅ Ensures content is scrollable
+    showsVerticalScrollIndicator={false} // Optional: Hides scroll indicator
+  >
+    <View
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+      }}>
+      <Text
         style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}>
-        <Text
-          style={{
-            fontFamily: 'outfit-bold',
-            fontSize: 30
-          }}>My Trips</Text>
-        <Ionicons name="add-sharp" size={24} color="black" />
-      </View>
-      {loading && <ActivityIndicator size={'large'} />}
-      {userTrips?.length == 0 ?
-        <StartNewTripCard />
-        : <UserTripList userTrips={userTrips} />
-      }
-      {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ fontSize: 24, fontWeight: 'bold' }}>MyTrip</Text>
-      <Button title="Logout" onPress={handleLogout} />
-    </View> */}
+          fontFamily: 'outfit-bold',
+          fontSize: 30
+        }}>My Trips</Text>
+      <Ionicons name="add-sharp" size={24} color="black" />
+    </View>
+    
+    {loading && <ActivityIndicator size={'large'} />}
+    
+    {userTrips?.length == 0 ? 
+      <StartNewTripCard /> 
+      : <UserTripList userTrips={userTrips} />
+    }
 
-    </ScrollView>
+  </ScrollView>
   )
 }

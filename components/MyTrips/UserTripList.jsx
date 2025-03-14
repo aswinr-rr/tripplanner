@@ -50,7 +50,7 @@ export default function UserTripList({ userTrips }) {
                     }}>
                         <Text style={{
                             fontFamily: 'outfit',
-                            fontSize: 17,
+                            fontSize:17,
                         }}>
                             {moment(LatestTrip.startDate).format('DD MMM YYYY')}
                         </Text>

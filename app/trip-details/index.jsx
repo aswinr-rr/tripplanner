@@ -1,9 +1,11 @@
-import { View, Text, Image, StatusBar } from 'react-native';
+import { View, Text, Image, StatusBar, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { Colors } from '../../constants/Colors';
 import moment from 'moment';
 import FlightInfo from '../../components/TripDetails/FlightInfo';
+import HotelList from '../../components/TripDetails/HotelList';
+import PlannedTrip from '../../components/TripDetails/PlannedTrip';
 
 export default function TripDetails() {
     const navigation = useNavigation();
@@ -36,7 +38,7 @@ export default function TripDetails() {
     }, []);
 
     return tripDetails && (
-        <View style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1 }}>
             {/* Hide Status Bar */}
             <StatusBar hidden={true} />
             <Image source={{
@@ -83,10 +85,12 @@ export default function TripDetails() {
                 <FlightInfo flightData={tripDetails?.tripPlan?.FlightDetails}/>
 
             {/* Hotels list */}
+            <HotelList HotelList={tripDetails?.tripPlan?.Hotels}/>
             {/* Trip day planner */}
+            <PlannedTrip details={tripDetails?.tripPlan?.Itinerary}/>
             </View>
             
 
-        </View>
+        </ScrollView>
     );
 }
