@@ -1,7 +1,16 @@
 import { View, Text, FlatList, Image } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 
-export default function HotelList({ HotelList: hotelData }) {  
+export default function HotelList({ HotelList: hotelData }) {
+  
+  useEffect(()=>{
+    GetGooglePhotoRef();
+  },[])
+
+  const GetGooglePhotoRef=async()=>{
+    const result = await GetPhotoRef('Las Vegas,USA');
+    console.log(result?.results[0]?.photos[0]?.photo_reference);
+  }
   return (
     <View style={{ marginTop: 20 }}>
       <Text style={{ fontFamily: 'outfit-bold', fontSize: 20 }}>
