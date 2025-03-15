@@ -1,7 +1,7 @@
-import { View, Text, Button, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, Button, ActivityIndicator, ScrollView, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Redirect } from 'expo-router';
+import { Redirect, router } from 'expo-router';
 import { Colors } from '../../constants/Colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { collection, getDocs, query, where } from 'firebase/firestore';
@@ -70,7 +70,11 @@ export default function MyTrip() {
           fontFamily: 'outfit-bold',
           fontSize: 30
         }}>My Trips</Text>
+        <TouchableOpacity
+        onPress={() => router.push('create-trip/search-place')}
+        >
       <Ionicons name="add-sharp" size={24} color="black" />
+      </TouchableOpacity>
     </View>
     
     {loading && <ActivityIndicator size={'large'} />}

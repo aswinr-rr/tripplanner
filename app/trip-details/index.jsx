@@ -54,43 +54,78 @@ export default function TripDetails() {
                 }}
             />
             <View style={{
-                padding: 15,
+                padding: 20,
                 backgroundColor: Colors.WHITE,
                 height: '100%',
                 marginTop: -30,
                 borderTopLeftRadius: 30,
                 borderTopRightRadius: 30,
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 4 },
+                shadowOpacity: 0.1,
+                shadowRadius: 5,
+                elevation: 5,
             }}>
                 <Text style={{
-                    fontSize: 25,
+                    fontSize: 26,
                     fontFamily: 'outfit-bold',
-
-                }}>{tripDetails?.tripPlan?.TravelSummary?.destination}</Text>
-                <View style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    gap: 5,
-                    marginTop:5,
+                    color: Colors.BLUE1,
+                    textAlign: 'center',
+                    marginBottom: 5,
                 }}>
-                    <Text>{moment(formatData(tripDetails.tripData).startDate).format('DD MMM YYYY')}</Text>
-                    <Text>-  {moment(formatData(tripDetails.tripData).endDate).format('DD MMM YYYY')}</Text>
+                    {tripDetails?.tripPlan?.TravelSummary?.destination}
+                </Text>
+
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginVertical: 5,
+                }}>
+                    <Text style={{
+                        fontSize: 18,
+                        fontFamily: 'outfit-medium',
+                        color: Colors.DARK_GRAY,
+                    }}>
+                        {moment(formatData(tripDetails.tripData).startDate).format('DD MMM YYYY')}
+                    </Text>
+                    <Text style={{
+                        fontSize: 18,
+                        fontFamily: 'outfit-medium',
+                        color: Colors.DARK_GRAY,
+                        marginHorizontal: 8,
+                    }}>
+                        -
+                    </Text>
+                    <Text style={{
+                        fontSize: 18,
+                        fontFamily: 'outfit-medium',
+                        color: Colors.DARK_GRAY,
+                    }}>
+                        {moment(formatData(tripDetails.tripData).endDate).format('DD MMM YYYY')}
+                    </Text>
                 </View>
+
                 <Text style={{
                     fontFamily: 'outfit',
-                    fontSize: 17,
+                    fontSize: 18,
+                    color: Colors.DARK_GRAY,
+                    textAlign: 'center',
+                    marginTop: 5,
                 }}>
                     {formatData(tripDetails.tripData)?.traveller.title}
                 </Text>
-                {/* flight info */}
-                <FlightInfo flightData={tripDetails?.tripPlan?.FlightDetails}/>
+                <FlightInfo flightData={tripDetails?.tripPlan?.FlightDetails} />
 
-            {/* Hotels list */}
-            <HotelList HotelList={tripDetails?.tripPlan?.Hotels}/>
-            {/* Trip day planner */}
-            <PlannedTrip details={tripDetails?.tripPlan?.Itinerary}/>
+                {/* Hotels list */}
+                <HotelList HotelList={tripDetails?.tripPlan?.Hotels} />
+                {/* Trip day planner */}
+                <PlannedTrip details={tripDetails?.tripPlan?.Itinerary} />
             </View>
-            
+
+
 
         </ScrollView>
     );
 }
+
