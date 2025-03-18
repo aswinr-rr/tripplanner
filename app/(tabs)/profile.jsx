@@ -24,7 +24,7 @@ export default function Profile() {
     };
 
     if (isLoggingOut) {
-        return <Redirect href="/auth/sign-in" />;
+        return <Redirect href="Login" />;
     }
 
     return (

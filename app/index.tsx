@@ -1,4 +1,4 @@
-import Login from '../components/Login';
+import Login from './Login';
 import { useEffect, useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';

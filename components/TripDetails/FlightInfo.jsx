@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Colors } from '../../constants/Colors';
-
+import { Linking } from 'react-native';
 export default function FlightInfo({ flightData }) {
   return (
     <View style={{
@@ -13,7 +13,7 @@ export default function FlightInfo({ flightData }) {
       shadowRadius: 3,
       elevation: 3,
     }}>
-      
+
       {/* Header Section */}
       <View style={{
         flexDirection: 'row',
@@ -30,6 +30,7 @@ export default function FlightInfo({ flightData }) {
         </Text>
 
         <TouchableOpacity
+          onPress={() => Linking.openURL('https://www.skyscanner.co.in/')}
           style={{
             paddingVertical: 10,
             paddingHorizontal: 15,
@@ -54,48 +55,48 @@ export default function FlightInfo({ flightData }) {
 
       {/* Flight Details Section */}
       <View style={{
-  borderTopWidth: 1,
-  borderTopColor: Colors.BLUE2,
-  paddingTop: 10,
-}}>
-  <Text style={{
-    fontFamily: 'outfit',
-    fontSize: 18,
-    color: Colors.DARK_GRAY,
-    marginBottom: 5,
-  }}>
-    Airline: {flightData?.airline || 'Not Available'}
-  </Text>
-
-  {/* Flight Prices Section */}
-  <View style={{
-    marginTop: 5,
-    padding: 10,
-    backgroundColor: Colors.LIGHT_BLUE, // Light background for better contrast
-    borderRadius: 10,
-  }}>
-    {flightData?.prices ? (
-      Object.entries(flightData.prices).map(([category, price], index) => (
-        <Text key={index} style={{
-          fontFamily: 'outfit-medium',
-          fontSize: 17,
-          color: Colors.DARK_GRAY,
-          marginBottom: 3,
-        }}>
-          {category.charAt(0).toUpperCase() + category.slice(1)}: {price}
-        </Text>
-      ))
-    ) : (
-      <Text style={{
-        fontFamily: 'outfit',
-        fontSize: 17,
-        color: Colors.DARK_GRAY,
+        borderTopWidth: 1,
+        borderTopColor: Colors.BLUE2,
+        paddingTop: 10,
       }}>
-        Price: N/A
-      </Text>
-    )}
-  </View>
-</View>
+        <Text style={{
+          fontFamily: 'outfit',
+          fontSize: 18,
+          color: Colors.DARK_GRAY,
+          marginBottom: 5,
+        }}>
+          Airline: {flightData?.airline || 'Not Available'}
+        </Text>
+
+        {/* Flight Prices Section */}
+        <View style={{
+          marginTop: 5,
+          padding: 10,
+          backgroundColor: Colors.LIGHT_BLUE, // Light background for better contrast
+          borderRadius: 10,
+        }}>
+          {flightData?.prices ? (
+            Object.entries(flightData.prices).map(([category, price], index) => (
+              <Text key={index} style={{
+                fontFamily: 'outfit-medium',
+                fontSize: 17,
+                color: Colors.DARK_GRAY,
+                marginBottom: 3,
+              }}>
+                {category.charAt(0).toUpperCase() + category.slice(1)}: {price}
+              </Text>
+            ))
+          ) : (
+            <Text style={{
+              fontFamily: 'outfit',
+              fontSize: 17,
+              color: Colors.DARK_GRAY,
+            }}>
+              Price: N/A
+            </Text>
+          )}
+        </View>
+      </View>
 
 
     </View>
