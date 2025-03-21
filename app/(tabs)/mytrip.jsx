@@ -81,7 +81,7 @@ export default function MyTrip() {
     
     {userTrips?.length == 0 ? 
       <StartNewTripCard /> 
-      : <UserTripList userTrips={userTrips} />
+      : <UserTripList userTrips={userTrips} setUserTrips={setUserTrips} />
     }
 
   </ScrollView>

@@ -1,7 +1,7 @@
 export const SelectTravellerList=[
     {
         id:1,
-        title:'Just Me',
+        title:'Just You',
         desc:"A sole Traveller",
         icon:'✈️',
         people:'1'
@@ -16,14 +16,14 @@ export const SelectTravellerList=[
     {
         id:3,
         title:'Family',
-        desc:"A group of ..",
+        desc:"A group of 4",
         icon:'🏠',
         people:'3 to 5'
     },
     {
         id:4,
         title:'Friends',
-        desc:"A gang",
+        desc:"A gang of friends",
         icon:'🚢',
         people:'5 to 10'
     },
