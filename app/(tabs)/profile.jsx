@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, Linking } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'expo-router';
 import { Colors } from '../../constants/Colors';
@@ -27,6 +27,19 @@ export default function Profile() {
         return <Redirect href="Login" />;
     }
 
+    const handleSupportMail = () => {
+        const email = 'mlprojectproject@gmail.com';
+        const subject = 'Support Request';
+        const body = 'Hello, I need help with...';
+
+        const mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+        Linking.openURL(mailto).catch(err => console.error('Error opening email app:', err));
+    };
+    const openDeviceSettings = () => {
+        Linking.openSettings().catch(() => alert('Unable to open settings.'));
+    };
+
     return (
         <View style={styles.container}>
             {/* Profile Card */}
@@ -54,19 +67,14 @@ export default function Profile() {
                 <View style={styles.divider} />
 
                 {/* Options */}
-                <TouchableOpacity style={styles.optionButton} onPress={() => alert('Edit Profile feature coming soon!')}>
-                    <Ionicons name="create-outline" size={24} color={Colors.DARK_GRAY} />
-                    <Text style={styles.optionText}>Edit Profile</Text>
-                    <Ionicons name="chevron-forward" size={24} color={Colors.BLUE1} />
-                </TouchableOpacity>
 
-                <TouchableOpacity style={styles.optionButton} onPress={() => alert('Settings feature coming soon!')}>
+                <TouchableOpacity style={styles.optionButton} onPress={openDeviceSettings}>
                     <Ionicons name="settings-outline" size={24} color={Colors.DARK_GRAY} />
                     <Text style={styles.optionText}>Settings</Text>
                     <Ionicons name="chevron-forward" size={24} color={Colors.BLUE1} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.optionButton} onPress={() => alert('Help & Support feature coming soon!')}>
+                <TouchableOpacity style={styles.optionButton} onPress={handleSupportMail}>
                     <Ionicons name="help-circle-outline" size={24} color={Colors.DARK_GRAY} />
                     <Text style={styles.optionText}>Help & Support</Text>
                     <Ionicons name="chevron-forward" size={24} color={Colors.BLUE1} />
